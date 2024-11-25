@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "blazemart-ecommerce-app",
-    "slug": "blazemart-ecommerce-app",
+    "name": "router-and-drawer-app",
+    "slug": "router-and-drawer-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
