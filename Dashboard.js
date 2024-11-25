@@ -101,12 +101,7 @@ function Dashboard() {
 
       {/* Loading Overlay with Fade Animation */}
       {loading && (
-        <Animated.View
-          style={[
-            styles.loadingOverlay,
-            { opacity: fadeAnim }, // Bind opacity to fadeAnim value
-          ]}
-        >
+        <Animated.View style={[styles.loadingOverlay, { opacity: fadeAnim }]}>
           <ActivityIndicator size="large" color="#fff" />
         </Animated.View>
       )}

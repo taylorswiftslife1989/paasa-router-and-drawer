@@ -7,6 +7,8 @@ import {
   Animated,
   ImageBackground,
   SafeAreaView,
+  TouchableOpacity,
+  Alert,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer"; // Drawer Navigator
@@ -18,8 +20,9 @@ import Dashboard from "./Dashboard";
 import VerifyPass from "./VerifyPass";
 import CreatePass from "./CreatePass";
 
+// Initialize Stack and Drawer Navigators
 const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator(); // Create Drawer Navigator
+const Drawer = createDrawerNavigator();
 
 // Splash Screen
 function SplashScreen({ navigation }) {
@@ -63,10 +66,51 @@ function SplashScreen({ navigation }) {
   );
 }
 
-// Drawer Navigator
+// Custom Drawer Content
+function CustomDrawerContent(props) {
+  const handleLogout = () => {
+    Alert.alert(
+      "Logout Confirmation",
+      "Are you sure you want to logout?",
+      [
+        {
+          text: "No",
+          onPress: () => {},
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            props.navigation.navigate("Login"); // Navigate to Login screen after logout
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.drawerContainer}>
+      <View style={styles.drawerContent}>
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate("Dashboard")}
+        >
+          <Text style={styles.drawerItem}>Dashboard</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleLogout}>
+          <Text style={styles.drawerItem}>Logout</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+// Drawer Navigator with Custom Drawer
 function DashboardDrawer() {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+    >
       <Drawer.Screen name="Dashboard" component={Dashboard} />
     </Drawer.Navigator>
   );
@@ -129,5 +173,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginTop: 20,
+  },
+  drawerContainer: {
+    flex: 1,
+    paddingTop: 50,
+    backgroundColor: "#fff",
+  },
+  drawerContent: {
+    padding: 20,
+  },
+  drawerItem: {
+    fontSize: 18,
+    paddingVertical: 15,
+    color: "#333",
   },
 });
